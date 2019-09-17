@@ -35,7 +35,9 @@ Download the repo and install it
  
  a file with a *_HomeBank* suffix will be created alongside your original transaction file.
  
- ## How to add support for new transaction formats
+ ## Contribution
+ 
+ ### How to add support for new transaction formats
  
  1) Create an anonymized version of your transaction file. 
  2) Create an issue (tag it with 'new transaction file format') and attach your file.
