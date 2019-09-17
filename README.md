@@ -6,16 +6,17 @@ HomeBank is a great tool to gain insight into your expenses. Most online banking
 
 This library is inspired by https://github.com/hamvocke/dkb2homebank 
 
-## Design principles
-
- - Modular design to easily extend the supported CSV file formats
-
 ## Features
 
  - Automatically detect the CSV file format
  - Supported online banking apps:
    - Volksbank
    - Deutsche Kreditbank (DKB)
+   
+
+## Design principles
+
+ - Modular design to easily extend the supported CSV file formats
    
 ## How to use
 
