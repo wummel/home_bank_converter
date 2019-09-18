@@ -2,11 +2,11 @@ from setuptools import setup
 
 setup(
     name='home_bank_converter',
-    version='',
+    version='0.1.0',
     packages=['home_bank_converter'],
-    url='',
-    license='',
+    url='https://github.com/FabianReister/home_bank_converter',
+    license='GPL-3.0',
     author='Fabian Reister',
     author_email='',
-    description=''
+    description='Converter for various online banking transaction files to be able to import them to HomeBank (http://homebank.free.fr)'
 )
