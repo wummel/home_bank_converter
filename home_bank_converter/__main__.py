@@ -8,6 +8,9 @@ from home_bank_converter.csv_file_format import csv_file_format_registry
 
 
 def main():
+    logging.basicConfig(level=logging.INFO)
+    coloredlogs.install(level=logging.INFO)
+
     parser = argparse.ArgumentParser(
         description=
         "Convert a CSV export file from your online banking to a HomeBank compatible CSV format."
@@ -25,6 +28,4 @@ def main():
 
 
 if __name__ == '__main__':
-    logging.basicConfig(level=logging.INFO)
-    coloredlogs.install(level=logging.INFO)
     main()
