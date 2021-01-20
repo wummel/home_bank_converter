@@ -27,7 +27,7 @@ class InputCsvContent:
         return len(self.transaction_lines)
 
 
-class Converter(object):
+class Converter:
     max_header_lines = 13
 
     def __init__(self, filename: str):
