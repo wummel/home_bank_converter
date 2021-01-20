@@ -12,11 +12,13 @@ class CsvFileFormat:
     header_pattern: Optional[str] = None
 
     def matches(self, first_document_lines: str) -> bool:
-        return re.match(self.header_pattern, str(first_document_lines)) is not None
+        return re.match(self.header_pattern,
+                        str(first_document_lines)) is not None
 
     @property
     def number_header_lines(self):
-        return self.header_pattern.count("\n") if self.header_pattern is not None else 0
+        return self.header_pattern.count(
+            "\n") if self.header_pattern is not None else 0
 
     csv_fields: HomeBankFields = None
 
@@ -124,7 +126,9 @@ class CsvFileFormatRegistry:
         if matches:
             return matches[0]
         else:
-            raise ValueError(f"Unsupported CSV file format. Supported formats are {self.registry}")
+            raise ValueError(
+                f"Unsupported CSV file format. Supported formats are {self.registry}"
+            )
 
     @property
     def list(self):
