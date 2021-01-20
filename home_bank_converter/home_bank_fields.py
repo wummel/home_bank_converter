@@ -1,4 +1,3 @@
-
 class HomeBankFields:
     DATE = None
     PAYEE = None
@@ -24,6 +23,7 @@ class DKBVisaFields(HomeBankFields):
     AMOUNT = u"Betrag (EUR)"
     MEMO = u"Beschreibung"
 
+
 class VBGiroFields(HomeBankFields):
     DATE = u"Buchungstag"
     AMOUNT = u"Umsatz"
@@ -32,3 +32,9 @@ class VBGiroFields(HomeBankFields):
 
     SIGN = u" "
 
+
+class SparkasseFields(HomeBankFields):
+    DATE = u"Buchungstag"
+    AMOUNT = u"Betrag"
+    MEMO = u"Verwendungszweck"
+    PAYEE = u"Beguenstigter/Zahlungspflichtiger"

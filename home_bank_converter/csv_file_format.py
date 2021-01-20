@@ -1,32 +1,38 @@
 import csv
-from typing import List
+from typing import List, Optional
+import re
 
-from home_bank_converter.csv_dialects import DialectVB, DialectDKB
+from home_bank_converter.csv_dialects import DialectVB, DialectDKB, DialectSparkasse
 from home_bank_converter.home_bank_fields import *
 
 
 class CsvFileFormat:
-    header_pattern: str = None
+    name : str
+
+    header_pattern: Optional[str] = None
 
     def matches(self, first_document_lines: str) -> bool:
-        import re
         return re.match(self.header_pattern, str(first_document_lines)) is not None
 
     @property
     def number_header_lines(self):
-        return self.header_pattern.count("\n")
+        return self.header_pattern.count("\n") if self.header_pattern is not None else 0
 
     csv_fields: HomeBankFields = None
 
     dialect: csv.Dialect = None
 
+    date_format = str
+
     def __init__(self):
-        assert self.header_pattern is not None
+        # assert self.header_pattern is not None
         assert self.csv_fields is not None
         assert self.dialect is not None
 
 
 class CsvFileFormatDkbVisa(CsvFileFormat):
+    name = "dkb_visa"
+
     header_pattern = '"Kreditkarte:";"\d+[*]+\d+";\n' \
                      '\n' \
                      '"Von:";"[\d,.]+";\n' \
@@ -38,9 +44,13 @@ class CsvFileFormatDkbVisa(CsvFileFormat):
     dialect = DialectDKB()
 
     csv_fields = DKBVisaFields()
+    
+    date_format = "%d.%m.%Y"
 
 
 class CsvFileFormatDkbGiro(CsvFileFormat):
+    name = "dkb_giro"
+
     header_pattern = '"Kontonummer:";"\w+\d+ / \w+";\n' \
                      '\n' \
                      '"Von:";"[\w.]+";\n' \
@@ -52,8 +62,13 @@ class CsvFileFormatDkbGiro(CsvFileFormat):
 
     csv_fields = DKBGiroFields()
 
+    date_format = "%d.%m.%Y"
+
+
 
 class CsvFileFormatVBGiro(CsvFileFormat):
+    name = "vb_giro"
+
     header_pattern = '"Vereinigte Volksbank eG"\n' \
                      '\n' \
                      '"Umsatzanzeige"\n' \
@@ -71,6 +86,25 @@ class CsvFileFormatVBGiro(CsvFileFormat):
 
     dialect = DialectVB()
 
+    date_format = "%d.%m.%Y"
+
+
+
+class CsvFileFormatSparkasse(CsvFileFormat):
+    name = "sparkasse"
+
+    header_pattern = None # '"Auftragskonto";"Buchungstag";"Valutadatum";"Buchungstext";"Verwendungszweck";"Beguenstigter/Zahlungspflichtiger";"Kontonummer";"BLZ";"Betrag";"Waehrung";"Info"\n'
+
+    csv_fields = SparkasseFields()
+
+    dialect = DialectSparkasse()
+
+    date_format = "%d.%m.%y"
+
+    def __repr__(self):
+        return self.name
+
+
 
 class CsvFileFormatRegistry:
     registry: List[CsvFileFormat] = list()
@@ -87,8 +121,20 @@ class CsvFileFormatRegistry:
 
         raise RuntimeError("Unknown header format!")
 
+    def find_by_name(self, format_id: str):
+        matches = [f for f in self.registry if f.name == format_id]
+
+        if matches:
+            return matches[0]
+        else:
+            raise ValueError(f"Unsupported CSV file format. Supported formats are {self.registry}")
+
+    @property
+    def list(self):
+        return [f.name for f in self.registry]
 
 csv_file_format_registry = CsvFileFormatRegistry()
 csv_file_format_registry.register(CsvFileFormatDkbVisa())
 csv_file_format_registry.register(CsvFileFormatDkbGiro())
 csv_file_format_registry.register(CsvFileFormatVBGiro())
+csv_file_format_registry.register(CsvFileFormatSparkasse())
