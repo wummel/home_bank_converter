@@ -12,5 +12,9 @@ setup(
     install_requires=[
         "datetime",
         "typing",
-    ]
+        "coloredlogs",
+    ],
+    entry_points={
+        'console_scripts': ['home_bank_converter=home_bank_converter.__main__:main']
+    }
 )
