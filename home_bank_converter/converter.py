@@ -50,7 +50,8 @@ class Converter(object):
                 input_csv_content.csv_file_format = csv_file_format_registry.find_by_name(
                     csv_file_format)
 
-            logging.info(f"File format is '{input_csv_content.csv_file_format}'")
+            logging.info(
+                f"File format is '{input_csv_content.csv_file_format}'")
 
             input_csv_content.transaction_header_line = csv_lines[
                 input_csv_content.csv_file_format.number_header_lines]
@@ -61,6 +62,8 @@ class Converter(object):
 
             logging.info(
                 f"Discovered {input_csv_content.n_transactions} transactions.")
+
+            return input_csv_content
 
     @property
     def output_filename(self):
@@ -73,8 +76,8 @@ class Converter(object):
     ]
 
     def convert_and_write(self, input_csv_content: InputCsvContent):
-        fieldnames = input_csv_content.transaction_header_line.replace('"', '').replace(
-            "\n", "").split(';')
+        fieldnames = input_csv_content.transaction_header_line.replace(
+            '"', '').replace("\n", "").split(';')
 
         reader = csv.DictReader(
             input_csv_content.transaction_lines,
@@ -112,21 +115,22 @@ class Converter(object):
 
                 writer.writerow({
                     'date':
-                        convert_date(row[fields.DATE],
-                                     input_csv_content.csv_file_format.date_format),
+                    convert_date(
+                        row[fields.DATE],
+                        input_csv_content.csv_file_format.date_format),
                     'paymode':
-                        8,
+                    8,
                     'info':
-                        None,
+                    None,
                     'payee':
-                        row[fields.PAYEE].replace("\n", " ")
-                        if fields.PAYEE else None,
+                    row[fields.PAYEE].replace("\n", " ")
+                    if fields.PAYEE else None,
                     'memo':
-                        row[fields.MEMO].replace("\n", " "),
+                    row[fields.MEMO].replace("\n", " "),
                     'amount':
-                        amount,
+                    amount,
                     'category':
-                        None,
+                    None,
                     'tags':
-                        None
+                    None
                 })
