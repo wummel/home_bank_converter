@@ -24,7 +24,7 @@ class CsvFileFormat:
 
     dialect: csv.Dialect = None
 
-    date_format = str
+    date_format: str
 
     def __init__(self):
         # assert self.header_pattern is not None

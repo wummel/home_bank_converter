@@ -2,10 +2,11 @@ import csv
 import locale
 import logging
 import os
+from dataclasses import dataclass
 from datetime import datetime
 from typing import List, Optional
 
-from home_bank_converter.csv_file_format import csv_file_format_registry
+from home_bank_converter.csv_file_format import csv_file_format_registry, CsvFileFormat
 
 locale.setlocale(locale.LC_ALL, "en_US.UTF-8")
 
@@ -15,6 +16,17 @@ def convert_date(date_string, date_format: str):
     return date.strftime('%d-%m-%Y')
 
 
+@dataclass
+class InputCsvContent:
+    transaction_header_line: List[str] = None
+    transaction_lines: List[str] = None
+    csv_file_format: CsvFileFormat = None
+
+    @property
+    def n_transactions(self):
+        return len(self.transaction_lines)
+
+
 class Converter(object):
     max_header_lines = 13
 
@@ -22,6 +34,9 @@ class Converter(object):
         self.filename = filename
 
     def parse(self, csv_file_format: Optional[str]):
+
+        input_csv_content = InputCsvContent()
+
         with open(self.filename, 'r', encoding='iso-8859-1') as csvfile:
             csv_lines = csvfile.readlines()
 
@@ -29,22 +44,23 @@ class Converter(object):
 
             if csv_file_format is None:
                 logging.info("Auto-discovering CSV file format ...")
-                self.csv_file_format = csv_file_format_registry.find_matching_format(
+                input_csv_content.csv_file_format = csv_file_format_registry.find_matching_format(
                     potential_header_lines)
             else:
-                self.csv_file_format = csv_file_format_registry.find_by_name(
+                input_csv_content.csv_file_format = csv_file_format_registry.find_by_name(
                     csv_file_format)
 
-            logging.info(f"File format is '{self.csv_file_format}'")
+            logging.info(f"File format is '{input_csv_content.csv_file_format}'")
 
-            self.transaction_header_line = csv_lines[
-                self.csv_file_format.number_header_lines]
-            self.transaction_lines = csv_lines[(
-                self.csv_file_format.number_header_lines +
-                1):]  # skip header row
+            input_csv_content.transaction_header_line = csv_lines[
+                input_csv_content.csv_file_format.number_header_lines]
+
+            # skip header row
+            input_csv_content.transaction_lines = \
+                csv_lines[(input_csv_content.csv_file_format.number_header_lines + 1):]
 
             logging.info(
-                f"Discovered {len(self.transaction_lines)} transactions.")
+                f"Discovered {input_csv_content.n_transactions} transactions.")
 
     @property
     def output_filename(self):
@@ -56,13 +72,13 @@ class Converter(object):
         "tags"
     ]
 
-    def convert_and_write(self):
-        fieldnames = self.transaction_header_line.replace('"', '').replace(
+    def convert_and_write(self, input_csv_content: InputCsvContent):
+        fieldnames = input_csv_content.transaction_header_line.replace('"', '').replace(
             "\n", "").split(';')
 
         reader = csv.DictReader(
-            self.transaction_lines,
-            dialect=self.csv_file_format.dialect,
+            input_csv_content.transaction_lines,
+            dialect=input_csv_content.csv_file_format.dialect,
             fieldnames=fieldnames,
         )
 
@@ -71,7 +87,7 @@ class Converter(object):
         )
 
         with open(self.output_filename, 'w') as outfile:
-            fields = self.csv_file_format.csv_fields
+            fields = input_csv_content.csv_file_format.csv_fields
 
             writer = csv.DictWriter(
                 outfile,
@@ -96,21 +112,21 @@ class Converter(object):
 
                 writer.writerow({
                     'date':
-                    convert_date(row[fields.DATE],
-                                 self.csv_file_format.date_format),
+                        convert_date(row[fields.DATE],
+                                     input_csv_content.csv_file_format.date_format),
                     'paymode':
-                    8,
+                        8,
                     'info':
-                    None,
+                        None,
                     'payee':
-                    row[fields.PAYEE].replace("\n", " ")
-                    if fields.PAYEE else None,
+                        row[fields.PAYEE].replace("\n", " ")
+                        if fields.PAYEE else None,
                     'memo':
-                    row[fields.MEMO].replace("\n", " "),
+                        row[fields.MEMO].replace("\n", " "),
                     'amount':
-                    amount,
+                        amount,
                     'category':
-                    None,
+                        None,
                     'tags':
-                    None
+                        None
                 })
