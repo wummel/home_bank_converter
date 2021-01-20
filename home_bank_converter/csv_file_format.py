@@ -1,13 +1,13 @@
 import csv
-from typing import List, Optional
 import re
+from typing import List, Optional
 
 from home_bank_converter.csv_dialects import DialectVB, DialectDKB, DialectSparkasse
 from home_bank_converter.home_bank_fields import *
 
 
 class CsvFileFormat:
-    name : str
+    name: str
 
     header_pattern: Optional[str] = None
 
@@ -44,7 +44,7 @@ class CsvFileFormatDkbVisa(CsvFileFormat):
     dialect = DialectDKB()
 
     csv_fields = DKBVisaFields()
-    
+
     date_format = "%d.%m.%Y"
 
 
@@ -63,7 +63,6 @@ class CsvFileFormatDkbGiro(CsvFileFormat):
     csv_fields = DKBGiroFields()
 
     date_format = "%d.%m.%Y"
-
 
 
 class CsvFileFormatVBGiro(CsvFileFormat):
@@ -89,11 +88,10 @@ class CsvFileFormatVBGiro(CsvFileFormat):
     date_format = "%d.%m.%Y"
 
 
-
 class CsvFileFormatSparkasse(CsvFileFormat):
     name = "sparkasse"
 
-    header_pattern = None # '"Auftragskonto";"Buchungstag";"Valutadatum";"Buchungstext";"Verwendungszweck";"Beguenstigter/Zahlungspflichtiger";"Kontonummer";"BLZ";"Betrag";"Waehrung";"Info"\n'
+    header_pattern = None  # '"Auftragskonto";"Buchungstag";"Valutadatum";"Buchungstext";"Verwendungszweck";"Beguenstigter/Zahlungspflichtiger";"Kontonummer";"BLZ";"Betrag";"Waehrung";"Info"\n'
 
     csv_fields = SparkasseFields()
 
@@ -103,7 +101,6 @@ class CsvFileFormatSparkasse(CsvFileFormat):
 
     def __repr__(self):
         return self.name
-
 
 
 class CsvFileFormatRegistry:
@@ -132,6 +129,7 @@ class CsvFileFormatRegistry:
     @property
     def list(self):
         return [f.name for f in self.registry]
+
 
 csv_file_format_registry = CsvFileFormatRegistry()
 csv_file_format_registry.register(CsvFileFormatDkbVisa())

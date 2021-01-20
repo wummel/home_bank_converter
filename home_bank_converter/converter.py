@@ -1,13 +1,12 @@
+import csv
+import locale
 import logging
 import os
+from datetime import datetime
+from typing import List, Optional
 
 from home_bank_converter.csv_file_format import csv_file_format_registry
 
-from datetime import datetime
-import csv
-from typing import List, Optional
-
-import locale
 locale.setlocale(locale.LC_ALL, "en_US.UTF-8")
 
 
@@ -48,13 +47,13 @@ class Converter(object):
         return "{}_HomeBank{}".format(*splitext(self.filename))
 
     home_bank_field_names = ["date",
-                            "paymode",
-                            "info",
-                            "payee",
-                            "memo",
-                            "amount",
-                            "category",
-                            "tags"]
+                             "paymode",
+                             "info",
+                             "payee",
+                             "memo",
+                             "amount",
+                             "category",
+                             "tags"]
 
     def convert_and_write(self):
         # dialect = csv.Sniffer().sniff(self.csv_file.read(1024))

@@ -1,5 +1,6 @@
 import argparse
 import logging
+
 import coloredlogs
 
 from home_bank_converter.converter import Converter
