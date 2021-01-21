@@ -8,13 +8,14 @@ setup(
     license='GPL-3.0',
     author='Fabian Reister',
     author_email='',
-    description='Converter for various online banking transaction files to be able to import them to HomeBank (http://homebank.free.fr)',
+    description=
+    'Converter for various online banking transaction files to be able to import them to HomeBank (http://homebank.free.fr)',
     install_requires=[
         "datetime",
         "typing",
         "coloredlogs",
     ],
     entry_points={
-        'console_scripts': ['home_bank_converter=home_bank_converter.__main__:main']
-    }
-)
+        'console_scripts':
+        ['home_bank_converter=home_bank_converter.__main__:main']
+    })

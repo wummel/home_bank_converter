@@ -24,7 +24,7 @@ class CsvFileFormat:
 
     dialect: csv.Dialect = None
 
-    date_format = str
+    date_format: str
 
     def __init__(self):
         # assert self.header_pattern is not None
@@ -33,15 +33,14 @@ class CsvFileFormat:
 
 
 class CsvFileFormatDkbVisa(CsvFileFormat):
-    name = "dkb_visa"
+    name = "dkb-visa"
 
     header_pattern = '"Kreditkarte:";"\d+[*]+\d+";\n' \
                      '\n' \
                      '"Von:";"[\d,.]+";\n' \
                      '"Bis:";"[\d,.]+";\n' \
                      '"Saldo:";"[\w,.,\s]+";\n' \
-                     '"Datum:";"[\d,.]+";\n' \
-                     '\n'
+                     '"Datum:";"[\d,.]+";\n'
 
     dialect = DialectDKB()
 
@@ -51,7 +50,7 @@ class CsvFileFormatDkbVisa(CsvFileFormat):
 
 
 class CsvFileFormatDkbGiro(CsvFileFormat):
-    name = "dkb_giro"
+    name = "dkb-giro"
 
     header_pattern = '"Kontonummer:";"\w+\d+ / \w+";\n' \
                      '\n' \
