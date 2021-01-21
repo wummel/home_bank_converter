@@ -18,7 +18,7 @@ def convert_date(date_string, date_format: str):
 
 @dataclass
 class InputCsvContent:
-    transaction_header_line: List[str] = None
+    transaction_header_line: str = None
     transaction_lines: List[str] = None
     csv_file_format: CsvFileFormat = None
 
@@ -68,7 +68,7 @@ class Converter:
     @property
     def output_filename(self):
         from os.path import splitext
-        return "{}_HomeBank{}".format(*splitext(self.filename))
+        return "{}.homebank{}".format(*splitext(self.filename))
 
     home_bank_field_names = [
         "date", "paymode", "info", "payee", "memo", "amount", "category",
