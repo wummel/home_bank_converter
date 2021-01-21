@@ -33,7 +33,7 @@ Download the repo and install it
 
       python -m home_bank_converter [filename] 
  
- a file with a *_HomeBank* suffix will be created alongside your original transaction file.
+ a file with a *.homebank* suffix will be created alongside your original transaction file.
  
  ## Contribution
  
