@@ -23,7 +23,6 @@ class TestConverter(TestCase):
 
         converter = Converter(filename)
         input_csv_content = converter.parse("dkb-visa")
-        print(input_csv_content)
 
         self.assertEqual(input_csv_content.n_transactions, 3)
 
