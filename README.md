@@ -4,7 +4,7 @@ Converter for various online banking transaction files to be able to import them
 
 HomeBank is a great tool to gain insight into your expenses. Most online banking apps provide a CSV file export for your transactions. As each online banking app uses a different file format, HomeBank might not be able to import them.
 
-This library is inspired by https://github.com/hamvocke/dkb2homebank 
+This package is inspired by https://github.com/hamvocke/dkb2homebank 
 
 ## Features
 
@@ -20,7 +20,7 @@ This library is inspired by https://github.com/hamvocke/dkb2homebank
    
 ## How to use
 
-home_bank_converter is a python library. 
+home_bank_converter is a python package. 
 
 ### Installation
 
