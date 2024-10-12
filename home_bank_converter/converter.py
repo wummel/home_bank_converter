@@ -119,7 +119,7 @@ class Converter:
                         row[fields.DATE],
                         input_csv_content.csv_file_format.date_format),
                     'paymode':
-                    8,
+                    fields.PAYMENT_MAPPING.get(row[fields.PAYMENT], 8) if fields.PAYMENT else 8,
                     'info':
                     None,
                     'payee':

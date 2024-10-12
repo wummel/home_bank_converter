@@ -4,6 +4,8 @@ class HomeBankFields:
     MEMO = None
     AMOUNT = None
     SIGN = None
+    PAYMENT = None
+    PAYMENT_MAPPING = {}
 
 
 class DKBGiroFields(HomeBankFields):
@@ -45,3 +47,5 @@ class AchtzehnZweiundzwanzigFields(HomeBankFields):
     AMOUNT = u"Soll/Haben"
     MEMO = u"Vwz.0"
     PAYEE = u"Empfänger/Auftraggeber Name"
+    PAYMENT = u"Buchungsart"
+    PAYMENT_MAPPING = {"Barausz.Debit.GA SPK": 3, "Gutschrift Überw.": 4, "Debitkartenzahlung": 6, "Entgeltabschluss": 10, "Rechnung": 10, "Rechnungsabschluss": 10, "Überweisung": 4, "Dauerauftrag": 7, "Lastschrift": 11}
