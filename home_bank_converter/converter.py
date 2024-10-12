@@ -2,6 +2,7 @@ import csv
 import locale
 import logging
 import os
+import re
 from dataclasses import dataclass
 from datetime import datetime
 from typing import List, Optional
@@ -101,6 +102,24 @@ class Converter:
             for row in reader:
                 row: List[str]
 
+                match fields.PAYEE:
+                    case dict():
+                        payee = re.findall(fields.PAYEE.get("regex"), row[fields.PAYEE.get("name")])
+                        payee = payee[0] if payee else None
+                    case None:
+                        payee = None
+                    case _:
+                        payee = row[fields.PAYEE].replace("\n", " ")
+
+                match fields.MEMO:
+                    case dict():
+                        memo = re.findall(fields.MEMO.get("regex"), row[fields.MEMO.get("name")])
+                        memo = memo[0] if memo else None
+                    case None:
+                        memo = None
+                    case _:
+                        memo = row[fields.MEMO].replace("\n", " ")
+
                 def soll_haben_sign(var):
                     return {"S": -1.0, "H": 1.0}[var]
 
@@ -123,10 +142,9 @@ class Converter:
                     'info':
                     None,
                     'payee':
-                    row[fields.PAYEE].replace("\n", " ")
-                    if fields.PAYEE else None,
+                    payee,
                     'memo':
-                    row[fields.MEMO].replace("\n", " "),
+                    memo,
                     'amount':
                     amount,
                     'category':
