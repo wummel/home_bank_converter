@@ -49,3 +49,12 @@ class AchtzehnZweiundzwanzigFields(HomeBankFields):
     PAYEE = u"Empfänger/Auftraggeber Name"
     PAYMENT = u"Buchungsart"
     PAYMENT_MAPPING = {"Barausz.Debit.GA SPK": 3, "Gutschrift Überw.": 4, "Debitkartenzahlung": 6, "Entgeltabschluss": 10, "Rechnung": 10, "Rechnungsabschluss": 10, "Überweisung": 4, "Dauerauftrag": 7, "Lastschrift": 11}
+
+
+class ComdirectFields(HomeBankFields):
+    DATE = u"Wertstellung (Valuta)"
+    AMOUNT = u"Umsatz in EUR"
+    MEMO = {"name": "Buchungstext", "regex": r".* Buchungstext: (.*) Ref\.*"}
+    PAYEE = {"name": "Buchungstext", "regex": r"[Auftraggeber:|Empfänger:] (.*) Buchungstext: .*"}
+    PAYMENT = u"Vorgang"
+    PAYMENT_MAPPING = {"Auszahlung GAA": 3, "Übertrag / Überweisung": 4, "Lastschrift / Belastung": 11, "Kartenverfügung": 6}
