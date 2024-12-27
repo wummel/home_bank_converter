@@ -2,7 +2,7 @@ import csv
 import re
 from typing import List, Optional
 
-from home_bank_converter.csv_dialects import DialectVB, DialectDKB, DialectSparkasse
+from home_bank_converter.csv_dialects import DialectVB, DialectDKB, DialectSparkasse, DialectAchtzehnZweiundzwanzig
 from home_bank_converter.home_bank_fields import *
 
 
@@ -104,6 +104,18 @@ class CsvFileFormatSparkasse(CsvFileFormat):
         return self.name
 
 
+class CsvFileFormatAchtzehnZweiundzwanzig(CsvFileFormat):
+    name = "1822direkt"
+
+    header_pattern = None
+
+    csv_fields = AchtzehnZweiundzwanzigFields()
+
+    dialect = DialectAchtzehnZweiundzwanzig()
+
+    date_format = "%d.%m.%Y"
+
+
 class CsvFileFormatRegistry:
     registry: List[CsvFileFormat] = list()
 
@@ -139,3 +151,4 @@ csv_file_format_registry.register(CsvFileFormatDkbVisa())
 csv_file_format_registry.register(CsvFileFormatDkbGiro())
 csv_file_format_registry.register(CsvFileFormatVBGiro())
 csv_file_format_registry.register(CsvFileFormatSparkasse())
+csv_file_format_registry.register(CsvFileFormatAchtzehnZweiundzwanzig())

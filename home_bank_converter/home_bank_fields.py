@@ -38,3 +38,10 @@ class SparkasseFields(HomeBankFields):
     AMOUNT = u"Betrag"
     MEMO = u"Verwendungszweck"
     PAYEE = u"Beguenstigter/Zahlungspflichtiger"
+
+
+class AchtzehnZweiundzwanzigFields(HomeBankFields):
+    DATE = u"Wertstellung"
+    AMOUNT = u"Soll/Haben"
+    MEMO = u"Vwz.0"
+    PAYEE = u"Empfänger/Auftraggeber Name"
