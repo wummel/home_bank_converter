@@ -12,6 +12,9 @@ This package is inspired by https://github.com/hamvocke/dkb2homebank
  - Supported online banking apps:
    - Volksbank
    - Deutsche Kreditbank (DKB)
+   - Sparkasse
+   - 1822direkt (contributed by @innir)
+   - Comdirect Bank (contributed by @innir)
    
 
 ## Design principles
