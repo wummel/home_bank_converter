@@ -12,8 +12,9 @@ class CsvFileFormat:
     header_pattern: Optional[str] = None
 
     def matches(self, first_document_lines: str) -> bool:
-        return re.match(self.header_pattern,
-                        str(first_document_lines)) is not None
+        return (self.header_pattern is not None and
+                re.match(self.header_pattern,
+                        str(first_document_lines)) is not None)
 
     @property
     def number_header_lines(self):
