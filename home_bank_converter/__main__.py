@@ -1,15 +1,17 @@
 import argparse
 import logging
 
-import coloredlogs
-
 from .converter import Converter
 from .csv_file_format import csv_file_format_registry
 
 
 def main():
     logging.basicConfig(level=logging.INFO)
-    coloredlogs.install(level=logging.INFO)
+    try:
+        import coloredlogs
+        coloredlogs.install(level=logging.INFO)
+    except ImportError:
+        pass
 
     parser = argparse.ArgumentParser(
         description=
