@@ -11,6 +11,8 @@ class CsvFileFormat:
 
     header_pattern: Optional[str] = None
 
+    footer_pattern: Optional[str] = None
+
     def matches(self, first_document_lines: str) -> bool:
         return (self.header_pattern is not None and
                 re.match(self.header_pattern,
@@ -124,6 +126,8 @@ class CsvFileFormatComdirect(CsvFileFormat):
                      '"Umsätze .*";"Zeitraum: .*";\n' \
                      '".*";\n' \
                      '\n'
+
+    footer_pattern = '^Alter Kontostand;'
 
     csv_fields = ComdirectFields()
 

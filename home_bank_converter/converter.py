@@ -77,12 +77,13 @@ class Converter:
     ]
 
     def convert_and_write(self, input_csv_content: InputCsvContent):
+        csv_file_format = input_csv_content.csv_file_format
         fieldnames = input_csv_content.transaction_header_line.replace(
             '"', '').replace("\n", "").split(';')
 
         reader = csv.DictReader(
             input_csv_content.transaction_lines,
-            dialect=input_csv_content.csv_file_format.dialect,
+            dialect=csv_file_format.dialect,
             fieldnames=fieldnames,
         )
 
@@ -91,7 +92,7 @@ class Converter:
         )
 
         with open(self.output_filename, 'w') as outfile:
-            fields = input_csv_content.csv_file_format.csv_fields
+            fields = csv_file_format.csv_fields
 
             writer = csv.DictWriter(
                 outfile,
@@ -100,6 +101,10 @@ class Converter:
             )
 
             for row in reader:
+                if csv_file_format.footer_pattern is not None:
+                    line = csv_file_format.dialect.delimiter.join(v or "" for v in row.values())
+                    if re.match(csv_file_format.footer_pattern, line):
+                        break
                 row: List[str]
 
                 match fields.PAYEE:
@@ -136,7 +141,7 @@ class Converter:
                     'date':
                     convert_date(
                         row[fields.DATE],
-                        input_csv_content.csv_file_format.date_format),
+                        csv_file_format.date_format),
                     'paymode':
                     fields.PAYMENT_MAPPING.get(row[fields.PAYMENT], 8) if fields.PAYMENT else 8,
                     'info':
