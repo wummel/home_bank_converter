@@ -120,9 +120,9 @@ class CsvFileFormatAchtzehnZweiundzwanzig(CsvFileFormat):
 class CsvFileFormatComdirect(CsvFileFormat):
     name = "comdirect"
 
-    header_pattern = ';\n' \
+    header_pattern = ';?\n' \
                      '"Umsätze .*";"Zeitraum: .*";\n' \
-                     '".*\n";' \
+                     '".*";\n' \
                      '\n'
 
     csv_fields = ComdirectFields()
