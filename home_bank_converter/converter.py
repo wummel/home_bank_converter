@@ -7,7 +7,7 @@ from dataclasses import dataclass
 from datetime import datetime
 from typing import List, Optional
 
-from home_bank_converter.csv_file_format import csv_file_format_registry, CsvFileFormat
+from .csv_file_format import csv_file_format_registry, CsvFileFormat
 
 locale.setlocale(locale.LC_ALL, "en_US.UTF-8")
 

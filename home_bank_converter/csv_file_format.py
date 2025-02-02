@@ -2,8 +2,8 @@ import csv
 import re
 from typing import List, Optional
 
-from home_bank_converter.csv_dialects import DialectVB, DialectDKB, DialectSparkasse, DialectAchtzehnZweiundzwanzig, DialectComdirect
-from home_bank_converter.home_bank_fields import *
+from .csv_dialects import DialectVB, DialectDKB, DialectSparkasse, DialectAchtzehnZweiundzwanzig, DialectComdirect
+from .home_bank_fields import *
 
 
 class CsvFileFormat:

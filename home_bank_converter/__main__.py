@@ -3,8 +3,8 @@ import logging
 
 import coloredlogs
 
-from home_bank_converter.converter import Converter
-from home_bank_converter.csv_file_format import csv_file_format_registry
+from .converter import Converter
+from .csv_file_format import csv_file_format_registry
 
 
 def main():
