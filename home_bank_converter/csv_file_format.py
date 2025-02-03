@@ -124,7 +124,7 @@ class CsvFileFormatComdirect(CsvFileFormat):
 
     header_pattern = ';?\n' \
                      '"Umsätze .*";"Zeitraum: .*";\n' \
-                     '".*";\n' \
+                     '(".*";)?\n' \
                      '\n'
 
     footer_pattern = '^Alter Kontostand;'
