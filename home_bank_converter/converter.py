@@ -52,7 +52,7 @@ class Converter:
                     csv_file_format)
 
             logging.info(
-                f"File format is '{input_csv_content.csv_file_format}'")
+                f"File format is '{input_csv_content.csv_file_format.name}'")
 
             input_csv_content.transaction_header_line = csv_lines[
                 input_csv_content.csv_file_format.number_header_lines]
